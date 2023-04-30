@@ -181,6 +181,12 @@ contract HousingSociety is ReentrancyGuard {
 
     }
 
+    function returnTokenBalance(address account) public view returns(uint256)
+    {
+        uint256 bal = housingNFT.tokenBalance(account);
+        return bal;
+    }
+
     function getProposals()
         external
         view
