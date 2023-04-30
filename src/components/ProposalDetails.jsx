@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   BarChart,
   Bar,
@@ -9,56 +9,57 @@ import {
   YAxis,
   Legend,
   Tooltip,
-} from 'recharts'
-import { getProposal, voteOnProposal } from '../Blockchain.services'
-import { useGlobalState, daysRemaining } from '../store'
+} from "recharts";
+import { getProposal, voteOnProposal } from "../Blockchain.services";
+import { useGlobalState, daysRemaining } from "../store";
 
 const ProposalDetails = () => {
-  const { id } = useParams()
-  const [proposal, setProposal] = useState(null)
-  const [data, setData] = useState([])
-  const [isStakeholder] = useGlobalState('isStakeholder')
+  const { id } = useParams();
+  const [proposal, setProposal] = useState(null);
+  const [data, setData] = useState([]);
+  // const [isStakeholder] = useGlobalState('isStakeholder')
+  const [mybalance] = useGlobalState("mybalance");
 
   useEffect(() => {
-    retrieveProposal()
-  }, [id])
+    retrieveProposal();
+  }, [id]);
 
   const retrieveProposal = async () => {
     await getProposal(id).then((res) => {
-      setProposal(res)
+      setProposal(res);
       setData([
         {
-          name: 'Voters',
+          name: "Voters",
           Acceptees: res?.upvotes,
           Rejectees: res?.downvotes,
         },
-      ])
-    })
-  }
+      ]);
+    });
+  };
 
   const onVote = async (choice) => {
-    if (new Date().getTime() > Number(proposal.duration + '000')) {
-      toast.warning('Proposal expired!')
-      return
+    if (new Date().getTime() > Number(proposal.duration + "000")) {
+      toast.warning("Proposal expired!");
+      return;
     }
 
-    await voteOnProposal(id, choice)
-    toast.success('Voted successfully!')
-  }
+    await voteOnProposal(id, choice);
+    toast.success("Voted successfully!");
+  };
 
   return (
     <div className="p-8">
       <h2 className="font-semibold text-3xl mb-5">{proposal?.title}</h2>
       <p>
         This proposal is to payout <strong>{proposal?.amount} Eth</strong> and
-        currently have{' '}
+        currently have{" "}
         <strong>{proposal?.upvotes + proposal?.downvotes} votes</strong> and
         will expire in <strong>{daysRemaining(proposal?.duration)}</strong>
       </p>
       <hr className="my-6 border-gray-300" />
       <p>{proposal?.description}</p>
-      <div className="flex flex-row justify-start items-center w-full mt-4 overflow-auto">
-        <BarChart width={730} height={250} data={data}>
+      <div className="flex flex-row justify-center items-center w-full mt-4 overflow-auto">
+        <BarChart width={400} height={300} data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
@@ -72,7 +73,7 @@ const ProposalDetails = () => {
         className="flex flex-row justify-start items-center space-x-3 mt-4"
         role="group"
       >
-        {isStakeholder ? (
+        {mybalance > 0 ? (
           <>
             <button
               type="button"
@@ -110,7 +111,7 @@ const ProposalDetails = () => {
         ) : null}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProposalDetails
+export default ProposalDetails;

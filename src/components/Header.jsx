@@ -59,6 +59,21 @@ const Header = () => {
                 />
               )}
 
+              <a href="https://smart-hive-bot-lbzf.vercel.app/">
+                {" "}
+                <button
+                  className="px-4 py-2.5 bg-pink-600 text-white
+                  font-medium text-xs leading-tight uppercase
+                  rounded-full shadow-md hover:bg-pink-700 hover:shadow-lg
+                  focus:bg-pink-700 focus:shadow-lg focus:outline-none
+                  focus:ring-0 active:bg-pink-800 active:shadow-lg
+                  transition duration-150 ease-in-out dark:text-pink-500
+                  dark:border dark:border-pink-500 dark:bg-transparent"
+                >
+                  ChatBot
+                </button>
+              </a>
+
               {connectedAccount ? (
                 <button
                   className="px-4 py-2.5 bg-pink-600 text-white

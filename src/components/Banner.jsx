@@ -38,15 +38,38 @@ const Banner = () => {
         Your NFT Balance:{" "}
         <span>
           <strong>{mybalance} Tokens</strong>
-          {mybalance > 0 ? ", and you are now a stakeholder 😊" : null}
+          {mybalance > 0 ? ", and you are now a Member" : null}
         </span>
       </p>
       <hr className="my-6 border-gray-300 dark:border-gray-500" />
-      <p>
-        {mybalance > 0
-          ? "You can now raise proposals on this platform 😆"
-          : "Hey, when you pay the maintaince and have a token then you can creat a proposal"}
-      </p>
+      <div>
+        {mybalance > 0 ? (
+          <p>You can now raise proposals on this platform</p>
+        ) : (
+          <div className="flex flex-row">
+            <p>You are not a member of this DAO yet:</p>
+            <a href="https://fit-me-53ebe.web.app/">
+              {" "}
+              <button
+                type="button"
+                className={`inline-block px-6 py-2.5 mx-6 mb-2
+          bg-pink-600 text-white font-medium text-xs
+          leading-tight uppercase shadow-md rounded-full
+          hover:bg-pink-700 hover:shadow-lg focus:bg-pink-700
+          focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-pink-800 active:shadow-lg transition
+          duration-150 ease-in-out dark:text-pink-500
+          dark:border dark:border-pink-500 dark:bg-transparent`}
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="light"
+                onClick={onContribute}
+              >
+                Become a Member
+              </button>
+            </a>
+          </div>
+        )}
+      </div>
       <div className="flex flex-row justify-start items-center md:w-1/3 w-full mt-4">
         <input
           type="number"
